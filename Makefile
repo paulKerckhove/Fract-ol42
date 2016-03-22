@@ -3,43 +3,46 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pkerckho <marvin@42.fr>                    +#+  +:+       +#+         #
+#    By: pkerckho <pkerckho@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/02/11 11:40:18 by pkerckho          #+#    #+#              #
-#    Updated: 2016/03/15 14:29:37 by pkerckho         ###   ########.fr        #
+#    Created: 2016/03/22 13:25:36 by pkerckho          #+#    #+#              #
+#    Updated: 2016/03/22 13:25:44 by pkerckho         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CFLAGS = -Wall -Wextra -Werror -I $(INC_DIR) $(INCL_DIR)
-
 NAME = fractol
 
-INC_DIR = includes
-INCL = libft/includes/libft.h
+CFLAGS = -Wall -Werror -Wextra -I includes
 
-SRC = main.c \
-
-
-LIB = libft/libft.a
+SRC = srcs/main.c \
+	  srcs/mandelbrot.c \
+	  srcs/mandelbralt.c \
+	  srcs/julia.c \
+	  srcs/burningship.c \
+	  srcs/ft_put_pixel.c \
+	  srcs/keybinding.c \
+	  srcs/zoom.c \
+	  srcs/settings.c
 
 OBJ = $(SRC:.c=.o)
 
-all: $(NAME)
+all : $(NAME)
 
-$(NAME): $(OBJ)
-	@make -C libft/
-	@gcc -o $(NAME) $(CFLAGS) $(SRC) $(LIB) -lmlx -framework OpenGL -framework AppKit libft/libft.a
+$(NAME) : $(OBJ)
+	@make -C libft
+	@gcc $(CFLAGS) -o $(NAME) $(OBJ) -I libft/includes/libft.h -lmlx -framework OpenGl -framework Appkit libft/libft.a
 	@echo "$(NAME) created"
 
-clean:
-	@rm -f $(OBJ)
-	@echo "$(NAME) OBJ deleted"
+clean :
+	make -C libft clean
+	rm -rf $(OBJ)
+	@echo "OBJ deleted"
 
-fclean: clean
-	@rm -f $(NAME)
-	@make fclean -C libft/
+fclean : clean
+	rm -rf $(NAME)
+	rm -rf libft/libft.a
 	@echo "$(NAME) deleted"
 
-re: fclean all
+re : fclean all
 
-.PHONY: all, clean, fclean, re
+.PHONY: all clean fclean re

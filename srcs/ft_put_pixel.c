@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl.c                                       :+:      :+:    :+:   */
+/*   ft_put_pixel.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pkerckho <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: pkerckho <pkerckho@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/25 11:18:54 by pkerckho          #+#    #+#             */
-/*   Updated: 2016/01/25 11:18:56 by pkerckho         ###   ########.fr       */
+/*   Created: 2016/03/22 13:23:30 by pkerckho          #+#    #+#             */
+/*   Updated: 2016/03/22 15:58:59 by pkerckho         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "fractol.h"
 
-void		ft_putendl(char const *s)
+void			ft_put_pixel(t_mlx *mlx, int x, int y, int color)
 {
-	ft_putstr(s);
-	ft_putchar('\n');
+	int			*tmp;
+
+	if (y >= WIN_Y || x >= WIN_X || x < 0 || y < 0)
+		return ;
+	tmp = (int *)&mlx->imc[(y * mlx->imlen) + (x * (mlx->bpp / 8))];
+	*tmp = color;
 }
